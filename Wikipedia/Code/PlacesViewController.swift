@@ -429,10 +429,14 @@ class PlacesViewController: ViewController, UISearchBarDelegate, ArticlePopoverV
         }
     }
     
-    func region(thatFits articles: [WMFArticle]) -> MKCoordinateRegion {
+    private func region(thatFits articles: [WMFArticle]) -> MKCoordinateRegion {
         let coordinates: [CLLocationCoordinate2D] =  articles.compactMap({ (article) -> CLLocationCoordinate2D? in
             return article.coordinate
         })
+        return region(thatFits: coordinates)
+    }
+    
+    private func region(thatFits coordinates: [CLLocationCoordinate2D]) -> MKCoordinateRegion {
         guard coordinates.count > 1 else {
             return coordinates.wmf_boundingRegion(with: 10000)
         }
@@ -1947,6 +1951,12 @@ class PlacesViewController: ViewController, UISearchBarDelegate, ArticlePopoverV
         let displayTitle = article.displayTitle ?? title
         let searchResult = MWKSearchResult(articleID: 0, revID: 0, title: title, displayTitle: displayTitle, displayTitleHTML: displayTitleHTML, wikidataDescription: article.wikidataDescription, extract: article.snippet, thumbnailURL: article.thumbnailURL, index: nil, titleNamespace: nil, location: article.location)
         currentSearch = PlaceSearch(filter: .top, type: .location, origin: .user, sortStyle: .links, string: nil, region: region, localizedDescription: title, searchResult: searchResult, siteURL: articleURL.wmf_site)
+    }
+    
+    @objc public func showPlace(_ coordinates: [Double]) {
+        assert(coordinates.count == 2, "Coordinates must contain two elements")
+        let region = self.region(thatFits: [CLLocationCoordinate2D(latitude: coordinates[0], longitude: coordinates[1])])
+        currentSearch = PlaceSearch(filter: .top, type: .location, origin: .user, sortStyle: .none, string: nil, region: region, localizedDescription: title, searchResult: nil)
     }
     
     fileprivate func searchForFirstSearchSuggestion() {
