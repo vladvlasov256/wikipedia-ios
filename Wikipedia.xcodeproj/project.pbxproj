@@ -3573,6 +3573,7 @@
 		F52195B229E2B46A00C4E62A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F52195B029E2B46A00C4E62A /* LaunchScreen.storyboard */; };
 		F52195C129E2D26900C4E62A /* LocationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52195C029E2D26900C4E62A /* LocationsModel.swift */; };
 		F52195C329E2DBF900C4E62A /* Location+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52195C229E2DBF900C4E62A /* Location+Extensions.swift */; };
+		F52195C529E2EAC000C4E62A /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52195C429E2EAC000C4E62A /* LocationViewController.swift */; };
 		FF2090F02500247100849774 /* ThreeLineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2090EE2500247100849774 /* ThreeLineHeaderView.swift */; };
 		FF2B2110254B7D6A0009E61A /* ActivityIndicatorCollectionViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B210F254B7D6A0009E61A /* ActivityIndicatorCollectionViewFooter.swift */; };
 		FF2B2111254B7D6A0009E61A /* ActivityIndicatorCollectionViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B210F254B7D6A0009E61A /* ActivityIndicatorCollectionViewFooter.swift */; };
@@ -5716,6 +5717,7 @@
 		F52195B329E2B46A00C4E62A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F52195C029E2D26900C4E62A /* LocationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsModel.swift; sourceTree = "<group>"; };
 		F52195C229E2DBF900C4E62A /* Location+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+Extensions.swift"; sourceTree = "<group>"; };
+		F52195C429E2EAC000C4E62A /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		FF0261872627B2D800CBD55F /* kcg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kcg; path = kcg.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF19C1AB260548FD000AC20B /* kcg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kcg; path = kcg.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FF19C1AC26054909000AC20B /* kcg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = kcg; path = kcg.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -9837,6 +9839,7 @@
 				F52195A529E2B46900C4E62A /* AppDelegate.swift */,
 				F52195C029E2D26900C4E62A /* LocationsModel.swift */,
 				F52195C229E2DBF900C4E62A /* Location+Extensions.swift */,
+				F52195C429E2EAC000C4E62A /* LocationViewController.swift */,
 				F52195A929E2B46900C4E62A /* MainViewController.swift */,
 				F52195AB29E2B46900C4E62A /* Main.storyboard */,
 				F52195AE29E2B46A00C4E62A /* Assets.xcassets */,
@@ -14262,6 +14265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F52195C529E2EAC000C4E62A /* LocationViewController.swift in Sources */,
 				F52195C329E2DBF900C4E62A /* Location+Extensions.swift in Sources */,
 				F52195AA29E2B46900C4E62A /* MainViewController.swift in Sources */,
 				F52195A629E2B46900C4E62A /* AppDelegate.swift in Sources */,

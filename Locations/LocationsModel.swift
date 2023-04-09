@@ -1,7 +1,7 @@
 import Foundation
 
 /// Holds place data.
-struct Location: Decodable {
+struct Location: Codable {
     let name: String?
     let latitude: Double
     let longitude: Double
@@ -14,16 +14,20 @@ struct Location: Decodable {
 }
 
 /// Helper class to parse remote data.
-private struct Locations: Decodable {
+private struct Locations: Codable {
     let locations: [Location]
 }
 
 /// Delegate for `LocationsModel`.
 protocol LocationsModelDelegate: AnyObject {
-    /// Notifies delegate that model is refreshing data.
+    /// The model is starting fetching data.
     func didStartRefreshing()
-    /// Notifies delegate that model finished refreshing data.
-    func didEndRefreshing(_ result: Result<Void, Error>)
+    /// The model has finished fetching data.
+    func didEndRefreshing()
+    /// The model has updated data.
+    func didUpdate()
+    /// A fetching error occured.
+    func didFail(_ error: Error)
 }
 
 /// Main model, fetches and stores remote and user places.
@@ -35,6 +39,7 @@ final class LocationsModel {
     
     private var isFetching = false
     private let remoteLocationsUrl = URL(string: "https://raw.githubusercontent.com/abnamrocoesd/assignment-ios/main/locations.json")
+    private let userLocationsKey = "LocationsModel.userLocations"
     
     /// Refreshes data if no data fetched yet or does nothing otherwise.
     func refreshIfNecessary() {
@@ -56,12 +61,20 @@ final class LocationsModel {
             }
         }
     }
+    
+    /// Adds new user location.
+    func add(userLocation location: Location) {
+        userLocations = [location] + (userLocations ?? [])
+        locations = [location] + locations
+        delegate?.didUpdate()
+    }
 
     private func fetchLocations(completion: (Result<[Location], Error>) -> Void) {
         do {
             let data = try remoteLocationsUrl.map { try Data(contentsOf: $0) } ?? Data()
             let json = try JSONDecoder().decode(Locations.self, from: data)
-            completion(.success(json.locations))
+            let userLocations = userLocations ?? []
+            completion(.success(userLocations + json.locations))
         } catch {
             completion(.failure(error))
         }
@@ -69,12 +82,32 @@ final class LocationsModel {
     
     private func process(result: Result<[Location], Error>) {
         isFetching = false
+        delegate?.didEndRefreshing()
         switch result {
         case .success(let locations):
             self.locations = locations
-            delegate?.didEndRefreshing(.success(()))
+            delegate?.didUpdate()
         case .failure(let error):
-            delegate?.didEndRefreshing(.failure(error))
+            // An workaround for offline mode
+            if locations.isEmpty {
+                locations = userLocations ?? []
+                delegate?.didUpdate()
+            }
+            delegate?.didFail(error)
+        }
+    }
+    
+    private var userLocations: [Location]? {
+        get {
+            guard let data = UserDefaults.standard.data(forKey: userLocationsKey) else { return nil }
+            return try? JSONDecoder().decode([Location].self, from: data)
+        }
+        set {
+            var data: Data? = nil
+            if let locations = newValue {
+                data = try? JSONEncoder().encode(locations)
+            }
+            UserDefaults.standard.set(data, forKey: userLocationsKey)
         }
     }
 }

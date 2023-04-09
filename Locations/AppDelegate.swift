@@ -17,7 +17,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        let viewController = window?.rootViewController as? MainViewController
+        let navigationController = window?.rootViewController as? UINavigationController
+        let viewController = navigationController?.viewControllers.first as? MainViewController
         let model = LocationsModel()
         viewController?.model = model
         model.delegate = viewController

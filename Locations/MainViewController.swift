@@ -1,6 +1,5 @@
 import UIKit
 
-
 // MARK: - ViewController
 
 final class MainViewController: UIViewController {
@@ -27,6 +26,13 @@ final class MainViewController: UIViewController {
         model?.refreshIfNecessary()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let locationViewController = segue.destination as? LocationViewController {
+            locationViewController.model = model
+            locationViewController.popoverPresentationController?.delegate = self
+        }
+    }
+    
     // MARK: Private
     
     @objc private func refreshData() {
@@ -51,11 +57,6 @@ final class MainViewController: UIViewController {
         })
         present(alert, animated: true)
     }
-    
-    private var shouldHidePullToRefreshInfo: Bool {
-        guard let model = model else { return false }
-        return !model.locations.isEmpty
-    }
 }
 
 // MARK: - LocationsModelDelegate
@@ -68,15 +69,23 @@ extension MainViewController: LocationsModelDelegate {
         }
     }
     
-    func didEndRefreshing(_ result: Result<Void, Error>) {
+    func didEndRefreshing() {
         refreshControl.endRefreshing()
-        pullToRefreshInfo?.isHidden = shouldHidePullToRefreshInfo
-        switch result {
-        case .success:
-            tableView?.reloadData()
-        case .failure:
-            presentError()
-        }
+    }
+    
+    func didUpdate() {
+        pullToRefreshInfo?.isHidden = model?.locations.count != 0
+        tableView?.reloadData()
+    }
+    
+    func didFail(_ error: Error) {
+        presentError()
+    }
+}
+
+extension MainViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 }
 
