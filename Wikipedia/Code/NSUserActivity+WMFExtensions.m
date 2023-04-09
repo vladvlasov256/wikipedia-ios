@@ -268,6 +268,10 @@ __attribute__((annotate("returns_localized_nsstring"))) static inline NSString *
     return self.userInfo[@"WMFURL"];
 }
 
+- (nullable NSArray *)wmf_coordinates {
+    return self.userInfo[@"WMFCoordinates"];
+}
+
 + (NSURLComponents *)wmf_baseURLComponentsForActivityOfType:(WMFUserActivityType)type {
     NSString *host = nil;
     switch (type) {

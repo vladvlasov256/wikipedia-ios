@@ -65,5 +65,12 @@
     XCTAssertEqualObjects(activity.webpageURL.absoluteString, @"https://en.wikipedia.org/wiki/Amsterdam");
 }
 
+- (void)testPlacesURLWithCoordinates {
+    NSURL *url = [NSURL URLWithString:@"wikipedia://places?WMFCoordinates=52.3547498,4.8339215"];
+    NSUserActivity *activity = [NSUserActivity wmf_activityForWikipediaScheme:url];
+    XCTAssertEqual(activity.wmf_type, WMFUserActivityTypePlaces);
+    XCTAssertEqual(activity.wmf_coordinates, (@[@52.3547498, @4.8339215]));
+}
+
 @end
 
