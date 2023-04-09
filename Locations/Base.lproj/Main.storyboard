@@ -17,9 +17,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pull from top to refresh data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfY-I4-4yv">
+                                <rect key="frame" x="90" y="428.33333333333331" width="213" height="20.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2x7-uJ-XQO">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" textLabel="U2h-lQ-tSf" detailTextLabel="wru-TC-O0Q" style="IBUITableViewCellStyleSubtitle" id="DpU-Nm-gzD">
                                         <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
@@ -57,11 +63,14 @@
                         <constraints>
                             <constraint firstItem="2x7-uJ-XQO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Iw2-yW-0NE"/>
                             <constraint firstItem="2x7-uJ-XQO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="XLl-qx-oON"/>
+                            <constraint firstItem="pfY-I4-4yv" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="YQh-qA-kab"/>
                             <constraint firstItem="2x7-uJ-XQO" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="nEX-V9-Iv2"/>
+                            <constraint firstItem="pfY-I4-4yv" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="thv-dO-rpC"/>
                             <constraint firstAttribute="trailing" secondItem="2x7-uJ-XQO" secondAttribute="trailing" id="wdx-Kb-PEC"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="pullToRefreshInfo" destination="pfY-I4-4yv" id="3wd-Is-8xf"/>
                         <outlet property="tableView" destination="2x7-uJ-XQO" id="ze2-CD-8wk"/>
                     </connections>
                 </viewController>

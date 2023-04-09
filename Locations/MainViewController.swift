@@ -5,8 +5,10 @@ import UIKit
 
 final class MainViewController: UIViewController {
     private let locationCellReuseIdentifier = "LocationCell"
+    private let pullToRefreshDelay = 0.25
     
     @IBOutlet weak var tableView: UITableView?
+    @IBOutlet weak var pullToRefreshInfo: UILabel?
     
     var model: LocationsModel?
     
@@ -28,7 +30,10 @@ final class MainViewController: UIViewController {
     // MARK: Private
     
     @objc private func refreshData() {
-        model?.refresh()
+        // Delay refreshing to avoid infinite activity indicator spinning when fetching fails fast
+        DispatchQueue.main.asyncAfter(deadline: .now() + pullToRefreshDelay) { [self] in
+            self.model?.refresh()
+        }
     }
     
     private func open(link: URL?) {
@@ -42,9 +47,14 @@ final class MainViewController: UIViewController {
         let alert = UIAlertController(title: "Something went wrong", message: "Please, try again", preferredStyle: .alert)
         alert.addAction(.init(title: "Ok", style: .cancel))
         alert.addAction(.init(title: "Retry", style: .default) { [weak self] _ in
-            self?.refreshData()
+            self?.model?.refresh()
         })
         present(alert, animated: true)
+    }
+    
+    private var shouldHidePullToRefreshInfo: Bool {
+        guard let model = model else { return false }
+        return !model.locations.isEmpty
     }
 }
 
@@ -52,6 +62,7 @@ final class MainViewController: UIViewController {
 
 extension MainViewController: LocationsModelDelegate {
     func didStartRefreshing() {
+        pullToRefreshInfo?.isHidden = true
         if !refreshControl.isRefreshing {
             refreshControl.beginRefreshing()
         }
@@ -59,6 +70,7 @@ extension MainViewController: LocationsModelDelegate {
     
     func didEndRefreshing(_ result: Result<Void, Error>) {
         refreshControl.endRefreshing()
+        pullToRefreshInfo?.isHidden = shouldHidePullToRefreshInfo
         switch result {
         case .success:
             tableView?.reloadData()
