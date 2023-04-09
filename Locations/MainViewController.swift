@@ -10,10 +10,14 @@ final class MainViewController: UIViewController {
     
     var model: LocationsModel?
     
+    private let refreshControl = UIRefreshControl()
+    
     // MARK: Overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView?.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -22,6 +26,10 @@ final class MainViewController: UIViewController {
     }
     
     // MARK: Private
+    
+    @objc private func refreshData() {
+        model?.refresh()
+    }
     
     private func open(link: URL?) {
         guard let link = link else { return }
@@ -34,7 +42,7 @@ final class MainViewController: UIViewController {
         let alert = UIAlertController(title: "Something went wrong", message: "Please, try again", preferredStyle: .alert)
         alert.addAction(.init(title: "Ok", style: .cancel))
         alert.addAction(.init(title: "Retry", style: .default) { [weak self] _ in
-            self?.model?.refresh()
+            self?.refreshData()
         })
         present(alert, animated: true)
     }
@@ -43,9 +51,14 @@ final class MainViewController: UIViewController {
 // MARK: - LocationsModelDelegate
 
 extension MainViewController: LocationsModelDelegate {
-    func didStartRefreshing() {}
+    func didStartRefreshing() {
+        if !refreshControl.isRefreshing {
+            refreshControl.beginRefreshing()
+        }
+    }
     
     func didEndRefreshing(_ result: Result<Void, Error>) {
+        refreshControl.endRefreshing()
         switch result {
         case .success:
             tableView?.reloadData()
