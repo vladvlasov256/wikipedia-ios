@@ -17,37 +17,57 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="wikipedia://places?WMFCoordinates=52.3547498,4.8339215" borderStyle="roundedRect" placeholder="wikipedia://places" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dIQ-de-eh3">
-                                <rect key="frame" x="20" y="421.66666666666669" width="353" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" textContentType="url"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zx2-gE-TA9">
-                                <rect key="frame" x="163.66666666666666" y="471.66666666666669" width="65.666666666666657" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Open"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2x7-uJ-XQO">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" textLabel="U2h-lQ-tSf" detailTextLabel="wru-TC-O0Q" style="IBUITableViewCellStyleSubtitle" id="DpU-Nm-gzD">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DpU-Nm-gzD" id="HZM-ei-clr">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U2h-lQ-tSf">
+                                                    <rect key="frame" x="20" y="6.0000000000000009" width="25" height="14.333333333333334"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wru-TC-O0Q">
+                                                    <rect key="frame" x="19.999999999999996" y="22.333333333333336" width="43.666666666666664" height="14.333333333333334"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
-                                    <action selector="openLink" destination="BYZ-38-t0r" eventType="touchUpInside" id="TU5-HW-FHc"/>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="p0W-fU-pjV"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="c66-D2-CsP"/>
                                 </connections>
-                            </button>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="dIQ-de-eh3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="33T-sO-sOB"/>
-                            <constraint firstItem="Zx2-gE-TA9" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="R6T-OE-kDV"/>
-                            <constraint firstItem="Zx2-gE-TA9" firstAttribute="top" secondItem="dIQ-de-eh3" secondAttribute="bottom" constant="16" id="n7Z-MJ-jZ7"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dIQ-de-eh3" secondAttribute="trailing" constant="20" id="nlK-yM-cjM"/>
-                            <constraint firstItem="dIQ-de-eh3" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="vja-6h-s0t"/>
+                            <constraint firstItem="2x7-uJ-XQO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Iw2-yW-0NE"/>
+                            <constraint firstItem="2x7-uJ-XQO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="XLl-qx-oON"/>
+                            <constraint firstItem="2x7-uJ-XQO" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="nEX-V9-Iv2"/>
+                            <constraint firstAttribute="trailing" secondItem="2x7-uJ-XQO" secondAttribute="trailing" id="wdx-Kb-PEC"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="linkTextField" destination="dIQ-de-eh3" id="wph-Xl-L9B"/>
+                        <outlet property="tableView" destination="2x7-uJ-XQO" id="ze2-CD-8wk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="4"/>
+            <point key="canvasLocation" x="135.1145038167939" y="3.5211267605633805"/>
         </scene>
     </scenes>
     <resources>
