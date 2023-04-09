@@ -29,6 +29,15 @@ final class MainViewController: UIViewController {
             UIApplication.shared.open(link)
         }
     }
+    
+    private func presentError() {
+        let alert = UIAlertController(title: "Something went wrong", message: "Please, try again", preferredStyle: .alert)
+        alert.addAction(.init(title: "Ok", style: .cancel))
+        alert.addAction(.init(title: "Retry", style: .default) { [weak self] _ in
+            self?.model?.refresh()
+        })
+        present(alert, animated: true)
+    }
 }
 
 // MARK: - LocationsModelDelegate
@@ -41,8 +50,7 @@ extension MainViewController: LocationsModelDelegate {
         case .success:
             tableView?.reloadData()
         case .failure:
-            return
-            // TODO: Implement
+            presentError()
         }
     }
 }
